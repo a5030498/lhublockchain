@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>後台管理</title>
+
+    <style>
+        .table thead th {
+            text-align: center;
+            color: #ffffff;
+            background-color: red;
+            font-family: 'Helvetica Neue', Helvetica, Arial, STHeitiTC-light, STHeiti,
+                'Microsoft JhengHei', 微軟正黑體, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .table th {
+            height: 60px;
+            width: 100px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .table tr {
+
+            margin: 10px;
+        }
+
+        .table td {
+            text-align: center;
+            height: 60px;
+
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .colName {
+            align-content: center;
+            height: 60px;
+            padding: 5px;
+            margin: 5px;
+
+        }
+
+        .inputBox {
+            text-align: center;
+            height: 60px;
+            width: 300px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .btn {
+            margin-left: 10px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: green;
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+    </style>
+    <title>後台管理</title>
+</head>
+
+<body style="background-color:lightblue;">
+    <center>
+        <h1>
+            <div style="line-height: 100px;vertical-align: middle;background-color: green;height: 100px;color: blue;">
+                龍華區塊鏈
+            </div>
+            <div
+                style="line-height: 80px;margin: 30px;align-content: center;background-color: thistle;color:white;height: 80px;width: 400px;">
+                <%= title %>
+            </div>
+
+        </h1>
+        <div>
+            <Form action=<% if(sqldetail[0]){ %>save<%}else{ %>insert<%}%> id='idForm' method='GET'>
+                        <Input hidden name='id' value=<% if(sqldetail[0]){ %>
+                        <%= sqldetail[0].id %>
+                            <% } %> >
+                                <div style="padding: 10px;">
+                                    <table class="table">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">會員編號</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input <% if(sqldetail[0]){ %> disabled <% } %> id ='memberno'
+                                                        name='memberno'
+                                                        class="inputBox" value=<% if(sqldetail[0]){ %>
+                                                            <%= sqldetail[0].memberno %>
+                                                                <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">會員名稱</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='username' name='username' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].username %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">密碼</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input type="password" id='pwd' name='pwd' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].pwd %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">性別</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <select id='gender' name='gender' class="inputBox"
+                                                        style="width:120px ;">
+                                                        <option>請選擇</option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].gender=='男' ){%>
+                                                            selected
+                                                            <% }} %> >男
+                                                        </option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].gender=='女' ){%>
+                                                            selected
+                                                            <% }} %> >女
+                                                        </option>
+                                                    </select>
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">生日</a>
+
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <Input id='birthday' name='birthday' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].birthday.getFullYear() + "-" + ("0" +
+                                                        (sqldetail[0].birthday.getMonth() + 1)).slice(-2) + "-" + ("0" +
+                                                        sqldetail[0].birthday.getDate()).slice(-2) %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">電話</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='cellphone' name='cellphone' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].cellphone %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;">地址</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='address' name='address' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].address %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">mail</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='mail' name='mail' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].mail %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">加入日期<a
+                                                                style="font-size: 15px;font-weight: bold;">(YYYY/MM/DD)</a></a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='joindate' name='joindate' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].joindate.getFullYear() + "-" + ("0" +
+                                                        (sqldetail[0].joindate.getMonth() + 1)).slice(-2) + "-" + ("0" +
+                                                        sqldetail[0].joindate.getDate()).slice(-2) %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;">點數</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='point' name='point' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].point %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">權限設定</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <select id='authority' name='authority' class="inputBox" >
+                                                        <option >請選擇</option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].authority=='10'){%>
+                                                            selected
+                                                            <% }} %> value='10' >管理員
+                                                        </option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].authority=='5'){%>
+                                                            selected
+                                                            <% }} %> value='6' >教務
+                                                        </option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].authority=='5'){%>
+                                                            selected
+                                                            <% }} %> value='5' >總務
+                                                        </option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].authority=='1'){%>
+                                                            selected
+                                                            <% }} %> value='1' >學生
+                                                        </option>
+                                                        <option <% if(sqldetail[0]){ if(sqldetail[0].authority=='0'){%>
+                                                            selected
+                                                            <% }} %> value='0' >停權
+                                                        </option>
+                                                    </select>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <a style="font-size: 30px;color: red;">＊為必填欄位</a>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div style="display: -webkit-inline-box;">
+                                    <div><input id='back' type='button' onclick="backClick()" class="btn btn-back"
+                                            style="float: left" value="回上頁"></div>
+                                    <div><input id='savebtn' type='button' class="btn btn-darkblue" style="float: left"
+                                            value="儲存"></div>
+
+                                </div>
+
+            </Form>
+        </div>
+    </center>
+</body>
+
+</html>
+<script>
+    $('#savebtn').click(function () {
+        var isValid = true;
+
+        if ($('#memberno').val() == '' || $('#username').val() == '' || $('#pwd').val() == '' || $('#gender').val() == ''
+            || $('#birthday').val() == '' || $('#cellphone').val() == '' || $('#mail').val() == ''
+            || $('#joindate').val() == '' || $('#authority').val() == '') {
+            alert('＊為必填欄位');
+            isValid = false;
+        }
+        if (isValid == true) {
+            if (confirm('是否確定儲存?')) {
+                $('#idForm').submit();
+                alert('已儲存');
+            };
+        }
+
+    })
+
+    function backClick() {
+        window.location = '/memberMaintain';
+    }
+
+</script>

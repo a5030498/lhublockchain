@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>後台管理</title>
+
+    <style>
+        .table thead th {
+            text-align: center;
+            color: #ffffff;
+            background-color: red;
+            font-family: 'Helvetica Neue', Helvetica, Arial, STHeitiTC-light, STHeiti,
+                'Microsoft JhengHei', 微軟正黑體, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .table th {
+            height: 60px;
+            width: 100px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .table tr {
+
+            margin: 10px;
+        }
+
+        .table td {
+            text-align: center;
+            height: 60px;
+            width: 100px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .btn {
+            margin-left: 5px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+            float: left
+        }
+
+        .btn1 {
+            margin: 5px;
+            font-size: 20px;
+            height: 45px;
+            width: 80px;
+            float: left
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+
+        .btn-blue {
+            color: white;
+            background-color: blue;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: #336666;
+        }
+
+        .btn-red {
+            color: white;
+            background-color: red;
+        }
+
+        #top span {
+            margin: auto;
+            padding-top: 8px;
+            line-height: 24px;
+            color: white;
+            padding: 5px;
+            letter-spacing: 3px;
+            font-family: 'Microsoft JhengHei';
+            /* margin-right: 40px; */
+        }
+
+        #top span.boxon {
+            border: white 1px solid;
+            background-color: #ffffff;
+            color: rgb(34, 34, 34);
+        }
+
+        #top span.personnel {
+            /* background-color: #ff452d; */
+            color: rgb(255, 255, 255);
+            padding: 5px 20px;
+            font-size: 15px;
+            letter-spacing: 1px;
+
+            float: right;
+        }
+
+        #top span.title {
+            font-size: 40px;
+            padding: 5px 30px;
+            line-height: 30px;
+            display: inline-block;
+            position: relative;
+            transform: skew(-5deg);
+            margin-top: 22px;
+            margin-bottom: 10px;
+            font-family: 'Microsoft JhengHei';
+        }
+
+        #top span.title::before {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgb(63, 12, 12);
+            transform: skew(-25deg);
+            box-shadow: 5px 0px 7px rgba(82, 82, 82, 0.4);
+        }
+
+        .subtitle {
+            font-size: 35px;
+            line-height: 80px;
+            margin: 20px;
+            align-content: center;
+            background-color: darkgreen;
+            color: white;
+            height: 80px;
+            width: 400px;
+        }
+    </style>
+    <title>後台管理</title>
+</head>
+
+<body style="background-color: lightblue;">
+    <center>
+
+        <h1>
+            <div id="top" style="background-color: green;">
+                <span class="title">龍華區塊鏈</span>
+                <span class="personnel">歡迎登入 , <%=req.session.memberno %>&nbsp;<%=req.session.username %></span>
+
+            </div>
+            <div class="subtitle" >
+                <%= title %>
+            </div>
+
+        </h1>
+        <div>
+            <Form action='first' id='idForm' method='GET'>
+                <div style="padding: 10px;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>編號</th>
+                                <th>名稱</th>
+                                <th>加入時間</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var i=0; i<sqlRS.length; i++) {%>
+                                <tr>
+                                    <td>
+                                        <%= sqlRS[i].vendorno %>
+                                    </td>
+                                    <td>
+                                        <%= sqlRS[i].name %>
+                                    </td>
+                                    <td>
+                                        <% if(sqlRS[i].joindate.getFullYear() !='1900' ){ %>
+                                            <%= sqlRS[i].joindate.getFullYear() + "-" + ("0" +
+                                                (sqlRS[i].joindate.getMonth() + 1)).slice(-2) + "-" + ("0" +
+                                                sqlRS[i].joindate.getDate()).slice(-2) %>
+                                                <%}%>
+                                    </td>
+                                    <td>
+                                        <div style="display: -webkit-inline-box;">
+                                            <input id='update' class="btn btn-blue" type="button" style="width: 70px;"
+                                                onclick="updateClick('<%=sqlRS[i].id%>')" value="編輯" />
+                                            <input id='delete' class="btn btn-red" type="button" style="width: 70px;"
+                                                onclick="deleteClick('<%=sqlRS[i].id%>')" value="刪除" />
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="display: -webkit-inline-box;">
+                    <div style="margin: 50px;">
+                        <input id='add' class="btn btn-back" type="button" onclick="backClick()" value="回首頁" />
+                    </div>
+                    <div style="margin: 50px;">
+                        <input id='add' class="btn btn-darkblue" type="button" onclick="addClick()" value="新增" />
+                    </div>
+
+                </div>
+
+
+            </Form>
+        </div>
+
+
+
+
+    </center>
+</body>
+
+
+<script>
+
+    $(document).ready(function () {
+
+    })
+
+    function backClick() {
+        window.location = '/backStageIndex';
+    }
+
+    function addClick() {
+        window.location = '/vendorMaintainDetail/add';
+    }
+    function updateClick(no) {
+        window.location = '/vendorMaintainDetail/update-' + no
+
+    }
+    function deleteClick(no) {
+        if(confirm('是否確定刪除此筆資料?')){
+            window.location = '/vendorMaintainDetail/delete-' + no
+        }
+        
+
+    }
+
+
+
+
+
+</script>
+
+
+
+</html>

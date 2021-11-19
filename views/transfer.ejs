@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>後台管理</title>
+
+    <style>
+        .table thead th {
+            text-align: center;
+            color: #ffffff;
+            background-color: red;
+            font-family: 'Helvetica Neue', Helvetica, Arial, STHeitiTC-light, STHeiti,
+                'Microsoft JhengHei', 微軟正黑體, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .table th {
+            height: 60px;
+            width: 100px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .table tr {
+
+            margin: 10px;
+        }
+
+        .table td {
+            text-align: center;
+            height: 60px;
+
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .colName {
+            align-content: center;
+            height: 60px;
+            padding: 5px;
+            margin: 5px;
+
+        }
+
+        .inputBox {
+            text-align: center;
+            height: 60px;
+            width: 300px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .btn {
+            margin-left: 10px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: green;
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+    </style>
+    <title>後台管理</title>
+</head>
+
+<body style="background-color:lightblue;">
+    <center>
+        <h1>
+            <div style="line-height: 100px;vertical-align: middle;background-color: green;height: 100px;color: blue;">
+                龍華區塊鏈
+            </div>
+            <div
+                style="line-height: 80px;margin: 30px;align-content: center;background-color: thistle;color:white;height: 80px;width: 400px;">
+                <%= title %>
+            </div>
+
+        </h1>
+        <div>
+            <Form action="transferDetail" id='idForm' method='POST'>
+                                <div style="padding: 10px;">
+                                    <table class="table">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">會員名稱</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input  class="inputBox" type="text" 
+                                                    value="<%= result[0].username %>" disabled>
+
+                                                    <Input  name='myusername' class="inputBox" type="lable" 
+                                                    value="<%= result[0].username %>" hidden>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">會員編號</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input class="inputBox" value="<%= result[0].memberno %>" disabled >
+
+                                                        <Input  hidden  
+                                                        name='mymemberno'
+                                                        class="inputBox" value="<%= result[0].memberno %>">
+                                                           
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">轉帳至帳戶(暫用會員編號)</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input   id ='memberno'
+                                                        name='memberno'
+                                                        class="inputBox" value="">
+                                                           
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">密碼</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input type="password" id='pwd' name='mypwd' class="inputBox" value="">
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;">點數</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='point' name='point' class="inputBox" value="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <a style="font-size: 30px;color: red;">＊為必填欄位</a>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div style="display: -webkit-inline-box;">
+                                    <div><input id='back' type='button' onclick="backClick()" class="btn btn-back"
+                                            style="float: left" value="回上頁"></div>
+                                    <div><input id='savebtn' type='button' class="btn btn-darkblue" style="float: left"
+                                            value="轉帳"></div>
+
+                                </div>
+
+            </Form>
+        </div>
+    </center>
+</body>
+
+</html>
+<script>
+    $('#savebtn').click(function () {
+        var isValid = true;
+
+        if ($('#memberno').val() == '' || $('#username').val() == '' || $('#pwd').val() == '' || $('#point').val()==''){
+            alert('＊為必填欄位');
+            isValid = false;
+        }
+        if (isValid == true) {
+            if (confirm('是否確定轉帳?')) {
+                $('#idForm').submit();
+            };
+        }
+
+    })
+
+    $("#idForm").on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/transferDetail',
+                data: $("#idForm").serialize(),
+                dataType: "json",
+                success: function (e) {
+                    if (e.result == "Y") {
+                        alert('轉帳成功!');
+                    }
+                    else {
+                        alert('轉帳失敗!');
+                    }
+                    window.location.href = "/backStageIndex";
+                },
+                error: function (result) {
+                    //console.log("error");
+                }
+            });          
+        });
+
+
+    function backClick() {
+        window.location = '/backStageIndex';
+    }
+
+</script>

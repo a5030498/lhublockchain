@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+
+    <title>Redirect</title>
+</head>
+
+<body style="background-color: lightblue;">
+    <input id='page' value=<%=title %> >
+</body>
+
+</html>
+
+<script>
+
+    $(document).ready(function () {
+        var page = $('#page').val();
+
+        if(page == 'login'){
+            window.location = '/login';
+        }else if (page == 'activityMaintain') {
+            window.location = '/activityMaintain';
+        }else if (page == 'itemMaintain') {
+            window.location = '/itemMaintain';
+        }else if (page == 'vendorMaintain') {
+            window.location = '/vendorMaintain';
+        }else if (page == 'memberMaintain') {
+            window.location = '/memberMaintain';
+        }else if(page=='backStageIndex'){
+            window.location = '/backStageIndex';
+        }
+
+    })
+
+
+
+
+
+</script>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>後台管理</title>
+
+    <style>
+        .table thead th {
+            text-align: center;
+            color: #ffffff;
+            background-color: red;
+            font-family: 'Helvetica Neue', Helvetica, Arial, STHeitiTC-light, STHeiti,
+                'Microsoft JhengHei', 微軟正黑體, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .table th {
+            height: 60px;
+            width: 100px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .table tr {
+
+            margin: 10px;
+        }
+
+        .table td {
+            text-align: center;
+            height: 60px;
+
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .colName {
+            align-content: center;
+            height: 60px;          
+            padding: 5px;
+            margin: 5px;
+
+        }
+
+        .inputBox {
+            text-align: center;
+            height: 60px;
+            width: 300px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        .btn {
+            margin-left: 10px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: green;
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+    </style>
+    <title>後台管理</title>
+</head>
+
+<body style="background-color:lightblue;">
+    <center>
+        <h1>
+            <div style="line-height: 100px;vertical-align: middle;background-color: green;height: 100px;color: blue;">
+                龍華區塊鏈
+            </div>
+            <div
+                style="line-height: 80px;margin: 30px;align-content: center;background-color: thistle;color:white;height: 80px;width: 400px;">
+                <%= title %>
+            </div>
+
+        </h1>
+        <div>
+            <Form action=<% if(sqldetail[0]){ %>save<%}else{ %>insert<%}%> id='idForm' method='GET'>
+                        <Input hidden name='id' value=<% if(sqldetail[0]){ %>
+                        <%= sqldetail[0].id %>
+                            <% } %> >
+                                <div style="padding: 10px;">
+                                    <table class="table">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    <div class='colName' >
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">商家編號</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input <% if(sqldetail[0]){ %> disabled <% } %> id ='vendorno'
+                                                        name='vendorno'
+                                                        class="inputBox" value=<% if(sqldetail[0]){ %>
+                                                            <%= sqldetail[0].vendorno %>
+                                                                <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">商家名稱</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='name' name='name' class="inputBox"
+                                                        value=<% if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].name %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">密碼</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='pwd' name='pwd' class="inputBox"
+                                                        value=<% if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].pwd %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        
+                                                        <a style="font-size: 30px;">電話</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='cellphone' name='cellphone' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].cellphone %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;">地址</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='address' name='address' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].address %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;">mail</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='mail' name='mail' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].mail %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;color: red;">＊</a>
+                                                        <a style="font-size: 30px;">加入日期<a style="font-size: 15px;font-weight: bold;">(YYYY/MM/DD)</a></a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='joindate' name='joindate' class="inputBox"
+                                                        value=<% if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].joindate.getFullYear() + "-" + ("0" +
+                                                        (sqldetail[0].joindate.getMonth() + 1)).slice(-2) + "-" +
+                                                        ("0" + sqldetail[0].joindate.getDate()).slice(-2) %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>
+                                                    <div class='colName'>
+                                                        <a style="font-size: 30px;">捐贈紀錄</a>
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <Input id='dnrecord' name='dnrecord' class="inputBox" value=<%
+                                                        if(sqldetail[0]){ %>
+                                                    <%= sqldetail[0].dnrecord %>
+                                                        <% } %> >
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <a style="font-size: 30px;color: red;">＊為必填欄位</a>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div style="display: -webkit-inline-box;">
+                                    <div><input id='back' type='button' onclick="backClick()" class="btn btn-back"
+                                            style="float: left" value="回上頁"></div>
+                                    <div><input id='savebtn' type='button' class="btn btn-darkblue" style="float: left"
+                                            value="儲存"></div>
+
+                                </div>
+
+            </Form>
+        </div>
+    </center>
+</body>
+
+</html>
+<script>
+    $('#savebtn').click(function () {
+        var isValid = true;
+
+        if ($('#vendorno').val() == '' || $('#name').val() == '' || $('#pwd').val() == ''
+            || $('#joindate').val() == '' ) {
+            alert('＊為必填欄位');
+            isValid = false;
+        }
+        if (isValid == true) {
+            if (confirm('是否確定儲存?')) {
+                $('#idForm').submit();
+                alert('已儲存');
+            };
+        }
+
+    })
+
+    function backClick() {
+        window.location = '/vendorMaintain';
+    }
+
+</script>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name=”viewport” content=”width=device-width, initial-scale=2.0″>
+    <title>龍華區塊練入口</title>
+
+    <style>
+        .input {
+            margin-left: 5%;
+            height:40px;
+            width: 50%;
+            font-size: 40px;
+        }
+
+        .text1 {
+            font-size: 40px;
+            
+        }
+        
+    </style>
+</head>
+
+<body style="background-color: lightblue;">
+    <center>
+        <h1>
+            <div style="line-height: 100px;vertical-align: middle;background-color: green;height: 100px;color: blue;">
+                龍華區塊鏈
+            </div>
+            <div
+                style="line-height: 80px;margin: 5%;align-content: center;background-color: thistle;color:white;width: 80%;">
+                <%= title %>
+            </div>
+
+        </h1>
+        <Form action='login' id='idForm' method='GET'>
+            <div style="margin: 10px;align-content: center;">
+                <a class="text1">帳號</a>
+                <Input name='acct' class="input">
+            </div>
+            <div style="margin: 10px;font-size: 30px;">
+                <a class="text1">密碼</a>
+                <Input type="password" name='pwd' class="input">
+
+            </div>
+
+            <div style="margin: 50px;"><input type='SUBMIT' value="登入"
+                    style="font-size: 20px;height: 35px;width: 150px;background-color:lightsalmon ; color:white;"></div>
+        </Form>
+        <div style="color:red">
+            <%= req.session.msg %>
+        </div>
+
+    </center>
+</body>
+
+</html>
+
+<script>
+
+
+</script>

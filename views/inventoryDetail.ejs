@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        <%= title %>
+    </title>
+
+    <style>
+        .header {
+            text-align: center
+        }
+
+        .table {
+            border: 3px solid black;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-size: 20px;
+        }
+
+        th,
+        td {
+            border: 3px solid black;
+            color: #404060;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .body {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        body {
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        .title2 {
+            line-height: 80px;
+            margin: 30px;
+            align-content: center;
+            background-color: thistle;
+            color: white;
+            height: 80px;
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #top span {
+            margin: auto;
+            padding-top: 8px;
+            line-height: 24px;
+            color: white;
+            padding: 5px;
+            letter-spacing: 3px;
+            font-family: 'Microsoft JhengHei';
+            /* margin-right: 40px; */
+        }
+
+        #top span.boxon {
+            border: white 1px solid;
+            background-color: #ffffff;
+            color: rgb(34, 34, 34);
+        }
+
+        #top span.personnel {
+            /* background-color: #ff452d; */
+            color: rgb(255, 255, 255);
+            padding: 5px 20px;
+            font-size: 15px;
+            letter-spacing: 1px;
+            float: right;
+        }
+
+        #top span.title {
+            padding: 5px 30px;
+            line-height: 30px;
+            display: inline-block;
+            position: relative;
+            transform: skew(-5deg);
+            margin-top: 22px;
+            margin-bottom: 10px;
+            font-family: 'Microsoft JhengHei';
+        }
+
+        #top span.title::before {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgb(63, 12, 12);
+            transform: skew(-25deg);
+            box-shadow: 5px 0px 7px rgba(82, 82, 82, 0.4);
+        }
+
+        .btn {
+            margin-left: 5px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+            float: left
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <div id="top" style="background-color: green;">
+            <span class="title">龍華區塊鏈</span>
+            <span class="personnel">歡迎登入 , <%=req.session.memberno %>&nbsp;<%=req.session.username %></span>
+        </div>
+        <div class="title2">
+            <%= title %>
+        </div>
+    </h1>
+    <div class="body">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>商品名稱</td>
+                    <td>
+                        <%= inventory[0].itemname %>
+                    </td>
+                    <td>庫存數量</td>
+                    <td>
+                        <%= inventory[0].quantity %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br><br>
+    <div class="body">
+        <h1 class="header">已兌換未領取</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>學號</th>
+                    <th>姓名</th>
+                    <th>數量</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i < inventory.length; i++) { %>
+                    <tr>
+                        <td>
+                            <%= inventory[i].memberno %>
+                        </td>
+                        <td>
+                            <%= inventory[i].username %>
+                        </td>
+                        <td>
+                            <%= inventory[i].exchangevolume %>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="display: -webkit-inline-box;margin-top: 100px;">
+        <div><input id='back' type='button' onclick="window.location = '/inventory'" class="btn btn-back"
+                style="float: left" value="回上頁"></div>
+
+
+    </div>
+</body>
+
+</html>

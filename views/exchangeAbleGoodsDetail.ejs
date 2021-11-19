@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>後台管理</title>
+
+    <style>
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .table td {
+            text-align: center;
+            height: 60px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+            font-size: 30px;
+        }
+
+        .label {
+            text-align: center;
+            height: 60px;
+            width: 350px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        body {
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        .title2 {
+            line-height: 80px;
+            margin: 30px;
+            align-content: center;
+            background-color: thistle;
+            color: white;
+            height: 80px;
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .div {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .td_title {
+            width: 30%;
+            height: 30px;
+        }
+
+        .td_body {
+            width: 50%;
+        }
+
+        tbody:before {
+            content: "-";
+            display: block;
+            line-height: 3em;
+            color: transparent;
+        }
+
+        #top span {
+            margin: auto;
+            padding-top: 8px;
+            line-height: 24px;
+            color: white;
+            padding: 5px;
+            letter-spacing: 3px;
+            font-family: 'Microsoft JhengHei';
+            /* margin-right: 40px; */
+        }
+
+        #top span.boxon {
+            border: white 1px solid;
+            background-color: #ffffff;
+            color: rgb(34, 34, 34);
+        }
+
+        #top span.personnel {
+            /* background-color: #ff452d; */
+            color: rgb(255, 255, 255);
+            padding: 5px 20px;
+            font-size: 15px;
+            letter-spacing: 1px;
+
+            float: right;
+        }
+
+        #top span.title {
+            padding: 5px 30px;
+            line-height: 30px;
+            display: inline-block;
+            position: relative;
+            transform: skew(-5deg);
+            margin-top: 22px;
+            margin-bottom: 10px;
+            font-family: 'Microsoft JhengHei';
+        }
+
+        #top span.title::before {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgb(63, 12, 12);
+            transform: skew(-25deg);
+            box-shadow: 5px 0px 7px rgba(82, 82, 82, 0.4);
+        }
+
+        .btn {
+            margin-left: 5px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+            float: left
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: green;
+        }
+    </style>
+    <title>後台管理</title>
+</head>
+
+<body>
+    <h1>
+        <div id="top" style="background-color: green;">
+            <span class="title">龍華區塊鏈</span>
+            <span class="personnel">歡迎登入 , <%=req.session.memberno %>&nbsp;<%=req.session.username %></span>
+        </div>
+        <div class="title2">
+            <%= title %>
+        </div>
+    </h1>
+    <div>
+        <form id='form' method='POST'>
+            <div class=div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td class="td_title">商品編號</td>
+                            <td><label for="itemno">
+                                    <%= exchangeAbleGoodsDetail[0].itemno %>
+                                </label></td>
+                            <input name="itemno" type="hidden" value="<%= exchangeAbleGoodsDetail[0].itemno %>">
+                        </tr>
+                        <tr>
+                            <td class="td_title">商品名稱</td>
+                            <td><label for="itemname">
+                                    <%= exchangeAbleGoodsDetail[0].itemname %>
+                                </label></td>
+                            <input name="itemname" type="hidden" value="<%= exchangeAbleGoodsDetail[0].itemname %>">
+                        </tr>
+                        <tr>
+                            <td class="td_title">商品內容</td>
+                            <td class="td_body" style="text-align: left;"><label for="content">
+                                    <%= exchangeAbleGoodsDetail[0].content %>
+                                </label></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input name="memberno" type="hidden" value="<%= req.session.memberno %>">
+                        <tr>
+                            <td class="td_title">花費點數</td>
+                            <td><label id="lbPointsspent" for="lbPointsspent"></label></td>
+                            <input type="hidden" id="pointsspent" name="pointsspent">
+                        </tr>
+                        <tr>
+                            <td class="td_title">剩餘庫存</td>
+                            <td><label for="quantity">
+                                    <%= exchangeAbleGoodsDetail[0].quantity %>
+                                </label></td>
+                            <input type="hidden" id="amount" value="<%= exchangeAbleGoodsDetail[0].amount %>">
+                            <input type="hidden" id="quantity" value="<%= exchangeAbleGoodsDetail[0].quantity %>">
+                        </tr>
+                        <tr>
+                            <td class="td_title">兌換數量</td>
+                            <td><input class="td_title" style="height: 30px;" type="text" id="exchangevolume" name="exchangevolume"
+                                    onchange="countPoint(this.id);"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <div style="display: -webkit-inline-box;margin-top: 100px;">
+                <div><input id='back' type='button' onclick="window.location = '/exchangeAbleGoods'" class="btn btn-back"
+                        style="float: left" value="回上頁"></div>
+                <div><input id='savebtn' type='submit' class="btn btn-darkblue" style="float: left" value="確認兌換">
+                </div>
+
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#form").on('submit', function (e) {
+            e.preventDefault();
+
+            if (check()) {
+                if(confirm('是否確認兌換?')){
+                    $.ajax({
+                    type: 'POST',
+                    url: '/exchangeAbleGoodsLog',
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function (e) {
+                        if (e.result == "Y") {
+                            alert('兌換成功!');
+                            window.location.href = '/exchangeAbleGoods %>'
+                        }
+                        else if (e.result == "S") {
+                            alert('點數餘額不足，無法兌換!');
+                        }
+                        else {
+                            alert('兌換失敗!');
+                        }
+                    },
+                    error: function (result) {
+                        //console.log("error");
+                    }
+                });
+                }                
+            }
+        });
+    });
+
+    function countPoint(id) {
+        if (check()) {
+            var amount = document.getElementById("amount").value;//單價
+            var volume = document.getElementById("exchangevolume").value;//兌換數量
+            var quantity = document.getElementById("quantity").value;//庫存數量
+
+            $('#lbPointsspent').text(amount * volume);
+            document.getElementById("pointsspent").value = amount * volume;
+        }
+    }
+
+    function check() {
+        var amount = document.getElementById("amount").value;//單價
+        var volume = document.getElementById("exchangevolume").value;//兌換數量
+        var quantity = document.getElementById("quantity").value;//庫存數量
+
+        var re = /^[0-9]*[1-9][0-9]*$/;
+        if (!re.test(volume)) {
+            alert("請輸入大於 1 的正整數");
+            return false;
+        }
+
+        if (parseInt(volume) > parseInt(quantity)) {
+            alert("庫存不足");
+            $('#lbPointsspent').text('');
+            document.getElementById("pointsspent").value = '';
+            return false;
+        }
+
+        if (parseInt(volume) < 1) {
+            alert("數量請輸入大於 1 的正整數");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+</html>

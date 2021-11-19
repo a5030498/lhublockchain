@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>後台管理</title>
+
+    <style>
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .table td {
+            text-align: center;
+            height: 60px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+            font-size: 30px;
+        }
+
+        .label {
+            text-align: center;
+            height: 60px;
+            width: 350px;
+            padding: 10px;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        body {
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        .title2 {
+            line-height: 80px;
+            margin: 30px;
+            align-content: center;
+            background-color: thistle;
+            color: white;
+            height: 80px;
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .div {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .td_title {
+            width: 30%;
+        }
+
+        .td_body {
+            width: 50%;
+        }
+
+        tbody:before {
+            content: "-";
+            display: block;
+            line-height: 3em;
+            color: transparent;
+        }
+
+        #top span {
+            margin: auto;
+            padding-top: 8px;
+            line-height: 24px;
+            color: white;
+            padding: 5px;
+            letter-spacing: 3px;
+            font-family: 'Microsoft JhengHei';
+            /* margin-right: 40px; */
+        }
+
+        #top span.boxon {
+            border: white 1px solid;
+            background-color: #ffffff;
+            color: rgb(34, 34, 34);
+        }
+
+        #top span.personnel {
+            /* background-color: #ff452d; */
+            color: rgb(255, 255, 255);
+            padding: 5px 20px;
+            font-size: 15px;
+            letter-spacing: 1px;
+
+            float: right;
+        }
+
+        #top span.title {
+            padding: 5px 30px;
+            line-height: 30px;
+            display: inline-block;
+            position: relative;
+            transform: skew(-5deg);
+            margin-top: 22px;
+            margin-bottom: 10px;
+            font-family: 'Microsoft JhengHei';
+        }
+
+        #top span.title::before {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgb(63, 12, 12);
+            transform: skew(-25deg);
+            box-shadow: 5px 0px 7px rgba(82, 82, 82, 0.4);
+        }
+
+        .btn {
+            margin-left: 5px;
+            font-size: 20px;
+            height: 45px;
+            width: 200px;
+            float: left
+        }
+
+        .btn-back {
+            color: white;
+            background-color: orange;
+        }
+
+        .btn-darkblue {
+            color: white;
+            background-color: green;
+        }
+    </style>
+    <title>後台管理</title>
+</head>
+
+<body>
+    <h1>
+        <div id="top" style="background-color: green;">
+            <span class="title">龍華區塊鏈</span>
+            <span class="personnel">歡迎登入 , <%=req.session.memberno %>&nbsp;<%=req.session.username %></span>
+        </div>
+        <div class="title2">
+            <%= title %>
+        </div>
+    </h1>
+    <div>
+        <form id='form' method='POST'>
+            <div class=div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td class="td_title">活動編號</td>
+                            <td><label for="activityno">
+                                    <%= joinActivityAbleDetail[0].activityno %>
+                                </label></td>
+                            <input name="activityno" type="hidden" value="<%= joinActivityAbleDetail[0].activityno %>">
+                        </tr>
+                        <tr>
+                            <td class="td_title">活動名稱</td>
+                            <td><label for="activityname">
+                                    <%= joinActivityAbleDetail[0].activityname %>
+                                </label></td>
+                        </tr>
+                        <tr>
+                            <td class="td_title">活動時間</td>
+                            <td class="td_body"><label for="activitydate">
+                                    <%= joinActivityAbleDetail[0].activitydate.getFullYear() + "/" + ("0" +
+                                        (joinActivityAbleDetail[0].activitydate.getMonth() + 1)).slice(-2) + "/" + ("0"
+                                        + joinActivityAbleDetail[0].activitydate.getDate()).slice(-2) %>
+                                </label></td>
+                        </tr>
+                        <tr>
+                            <td class="td_title">可獲得點數</td>
+                            <td><label for="point">
+                                    <%= joinActivityAbleDetail[0].point %>
+                                </label></td>
+                        </tr>
+                        <tr>
+                            <td class="td_title">內容</td>
+                            <td><label for="content">
+                                    <%= joinActivityAbleDetail[0].content %>
+                                </label></td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div style="display: -webkit-inline-box;">
+                <div><input id='back' type='button' onclick="window.location = '/joinActivityAble'" class="btn btn-back" style="float: left"
+                        value="回上頁"></div>
+                <div><input id='savebtn' type='submit' class="btn btn-darkblue" style="float: left" value="參加"></div>
+
+            </div>
+        </form>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $("#form").on('submit', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '/joinActivityAbleLog',
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function (e) {
+                    if (e.result == "Y") {
+                        alert('已參加!');
+                        window.location.href = '/joinActivityAble %>'
+                    }
+                    else {
+                        alert('失敗!');
+                    }
+                },
+                error: function (result) {
+                    //console.log("error");
+                }
+            });
+        });
+    });
+    function deleteClick(activityno,memberno) {
+        if(confirm('是否確定刪除此筆資料?')){
+            window.location = '/joinActivity/cancle/'+activityno+"/"+memberno 
+        }
+    }
+</script>
+
+</html>

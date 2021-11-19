@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <title>後台管理</title>
+
+    <style>
+        .btn {
+            border-radius: 20px;
+            margin: 15px;
+            font-size: 25px;
+            height: 60px;
+            width: 300px;
+        }
+
+        .btn1 {
+            margin: 5px;
+            font-size: 20px;
+            height: 45px;
+            width: 100px;
+            float: left
+        }
+
+        .btn-brown {
+            color: white;
+            background-color: brown;
+        }
+
+        .btn-darkcyan {
+            color: white;
+            background-color: darkcyan;
+        }
+
+        .btn-darkgreen {
+            color: white;
+            background-color: darkgreen;
+        }
+
+        .btn-darkorange {
+            color: white;
+            background-color: darkorange;
+        }
+
+        .btn-red {
+            color: white;
+            background-color: red;
+        }
+
+        .btn-black {
+            color: white;
+            background-color: black;
+        }
+
+        .btn-darkgoldenrod {
+            color: white;
+            background-color: darkgoldenrod;
+        }
+
+
+        #top span {
+            margin: auto;
+            padding-top: 8px;
+            line-height: 24px;
+            color: white;
+            padding: 5px;
+            letter-spacing: 3px;
+            font-family: 'Microsoft JhengHei';
+            /* margin-right: 40px; */
+        }
+
+        #top span.boxon {
+            border: white 1px solid;
+            background-color: #ffffff;
+            color: rgb(34, 34, 34);
+        }
+
+        #top span.personnel {
+            /* background-color: #ff452d; */
+            color: rgb(255, 255, 255);
+            padding: 5px 20px;
+            font-size: 15px;
+            letter-spacing: 1px;
+
+            float: right;
+        }
+
+        #top span.title {
+            font-size: 40px;
+            padding: 5px 30px;
+            line-height: 30px;
+            display: inline-block;
+            position: relative;
+            transform: skew(-5deg);
+            margin-top: 22px;
+            margin-bottom: 10px;
+            font-family: 'Microsoft JhengHei';
+        }
+
+        #top span.title::before {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgb(63, 12, 12);
+            transform: skew(-25deg);
+            box-shadow: 5px 0px 7px rgba(82, 82, 82, 0.4);
+        }
+
+        .subtitle {
+            font-size: 35px;
+            line-height: 80px;
+            margin: 20px;
+            align-content: center;
+            background-color: blue;
+            color: white;
+            height: 80px;
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body style="background-color: lightblue;">
+
+    <center>
+
+        <div id="top" style="background-color: green;">
+            <span class="title">龍華區塊鏈</span>
+            <span class="personnel">歡迎登入 , <%=req.session.memberno %>&nbsp;<%=req.session.username %></span>
+
+        </div>
+
+        <% if(req.session.authority=='10' ||req.session.authority=='5' ){ %>
+            <div class="subtitle">
+                後台管理
+            </div>
+            <%}%>
+
+                <% if(req.session.authority=='10' || req.session.authority=='6'){ %>
+                    
+                    <div>
+                        <input id='activityMaintain' class="btn btn-brown" type="button" onclick="activityMaintain()"
+                            value="活動維護" />
+                    </div>
+                    <!--
+                    <div>
+                        <input id='itemMaintain' class="btn btn-darkgreen" type="button" onclick="vendorMaintain()"
+                            value="廠商維護" />
+                    </div>
+                    -->
+                    <div>
+                        <input id='memberMaintain' class="btn btn-darkorange" type="button" onclick="memberMaintain()"
+                            value="會員維護" />
+                    </div>
+
+                    <%}%>
+                        <% if(req.session.authority=='10' ||req.session.authority=='5' ){ %>
+                            <div>
+                                <input id='itemMaintain' class="btn btn-darkcyan" type="button" onclick="itemMaintain()"
+                                    value="商品維護" />
+                            </div>
+                            <div>
+                                <input id='inventory' class="btn btn-darkgoldenrod" type="button" onclick="inventory()"
+                                    value="商品庫存" />
+                            </div>
+                            <%}%>
+                            <% if(req.session.authority=='10' ||req.session.authority=='1' ){ %>
+                                <div class="subtitle"style="background-color: white;color: black;border: 1px solid fuchsia;">
+                                    使用者功能
+                                </div>
+                                <div>
+                                    <input id='joinActivityAble' class="btn btn-black" type="button"
+                                        onclick="joinActivityAble()" style="color:yellow" value="參加活動" />
+                                </div>
+                                <div>
+                                    <input id='memberMaintain' class="btn btn-black" type="button"
+                                        onclick="joinActivity()" style="color:red" value="已參加活動" />
+                                </div>
+                                <div>
+                                    <input id='exchangeAbleGoods' class="btn btn-black" type="button"
+                                        onclick="exchangeAbleGoods()" value="兌換商品" />
+                                </div>
+                                <div>
+                                    <input id='exchangeGoods' class="btn btn-black" type="button"
+                                        onclick="exchangeGoods()" value="提領商品" />
+                                </div>
+                                <div>
+                                    <input id='transfer' class="btn btn-black" type="button"
+                                        onclick="transfer()" value="轉帳" />
+                                </div>
+                                <%}%>
+                                <div style="display: -webkit-inline-box;">
+
+                                    <div style="margin: 100px;">
+                                        <input id='logut' class="btn1 btn-red" type="button" onclick="logout()"
+                                            value="登出" />
+                                    </div>
+
+                                </div>
+
+
+    </center>
+</body>
+
+</html>
+
+<script>
+
+
+
+    function activityMaintain() {
+        window.location = '/activityMaintain';
+    }
+    function itemMaintain() {
+        window.location = '/itemMaintain';
+    }
+    function vendorMaintain() {
+        window.location = '/vendorMaintain';
+    }
+    function memberMaintain() {
+        window.location = '/memberMaintain';
+    }
+    function inventory() {
+        window.location = '/inventory';
+    }
+
+
+
+    function joinActivity() {
+        window.location = '/joinActivity';
+    }
+    function exchangeAbleGoods() {
+        window.location = '/exchangeAbleGoods';
+    }
+    function joinActivityAble() {
+        window.location = '/joinActivityAble';
+    }
+    function exchangeGoods() {
+        window.location = '/exchangeGoods';
+    }
+
+    function transfer() {
+        window.location = '/transfer';
+    }
+
+
+    function logout() {
+        window.location = '/logout';
+    }
+
+    var personobj1={
+name:'Alex',age:30
+};
+var person = personobj1;
+person.age = 25;
+person = 
+{
+name: 'John',
+age: 50 
+};
+var personobj2 = person;
+console.log(personobj1);
+console.log(personobj2);
+
+
+</script>
